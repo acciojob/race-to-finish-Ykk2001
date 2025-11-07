@@ -1,19 +1,4 @@
 <!DOCTYPE html>
-
-<!-- <html>
-  <head>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-
-  <body>
-    <!-- the entire body must be written by student -->
-    <!-- <div id="output"></div>
-    <script type="text/javascript" src="./script.js"></script> -->
-  <!-- </body> -->
-<!-- </html> --> 
-
-
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -25,25 +10,36 @@
 
     </div>
     <script>
-        let output=document.getElementById('output')
-        let promise=(time)=>{
-            return new Promise((resolve,reject)=>{
-                setTimeout(()=>{
-                  resolve(`${time}`)
-                },time)
+
+        let output=document.getElementById('output');
+        window.promises=[];
+
+        function createRandomPromise(index)
+        {
+            return new Promise((resolve)=>{
+
+             //calculate time between 1000 and 5000 ms
+             const time=Math.floor(Math.random()*4000)+1000;
+
+             setTimeout(()=>{
+               resolve(`Promise ${index} resolved in ${time/1000} seconds`)
+             },time);
+
             })
         }
 
-        let p1=promise(3000);
-        let p2=promise(2000);
-        let p3=promise(1000);
-        let p4=promise(4000);
-        let p5=promise(5000);
+        //creating the 5 promises
 
-        Promise.any([p1,p2,p3,p4,p5])
+        for(let i=1;i<=5;i++)
+        {
+            window.promises.push(createRandomPromise(i))
+        }
+
+        Promise.any(window.promises)
         .then((res)=>{
-            output.textContent=res;
+            output.innerText=res;
         })
+        
     </script>
 </body>
 </html>
